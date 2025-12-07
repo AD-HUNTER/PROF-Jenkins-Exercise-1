@@ -16,19 +16,11 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                sh './build.sh'
-            }
-        }
-
-        stage('Tests') {
-            steps {
-                sh './run-tests.sh'
-            }
-        }
+        stage('Build & Test') {
+    steps {
+        sh 'mvn -B clean verify'
     }
-
+}
     post {
         success {
             echo "OK: Build exitoso"
