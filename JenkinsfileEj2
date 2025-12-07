@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    options {
+        skipStagesAfterUnstable()
+    }
+
+    triggers {
+        githubPullRequest()
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh './build.sh'
+            }
+        }
+
+        stage('Tests') {
+            steps {
+                sh './run-tests.sh'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "OK: Build exitoso"
+        }
+        failure {
+            echo "ERROR: Fallo en build o tests"
+        }
+    }
+}
