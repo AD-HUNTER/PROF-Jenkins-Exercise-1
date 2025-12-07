@@ -5,10 +5,6 @@ pipeline {
         skipStagesAfterUnstable()
     }
 
-    triggers {
-        githubPullRequests()
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -17,10 +13,12 @@ pipeline {
         }
 
         stage('Build & Test') {
-    steps {
-        sh 'mvn -B clean verify'
+            steps {
+                sh 'mvn -B clean verify'
+            }
+        }
     }
-}
+
     post {
         success {
             echo "OK: Build exitoso"
